@@ -24,13 +24,30 @@ public class CollisionManager implements IPostEntityProcessingService {
      */
     @Override
     public void process(GameData gameData, World world) {
-
         collision(gameData, world);
-        //collisionDetection(gameData, world);
     }
 
 
-
+    /***
+     * Collision detection based on the pythagorean theorem.
+     * Collision is checked between all entities, and handled different depending on what is colliding.
+     * Player collisions with:
+     *  - Asteroids destroys the player ship
+     *  - Bullets reduces the player ship's life
+     *  - Enemy ships destroys both ships
+     * Asteroid collisions with:
+     *  - Other asteroids, nothing happens
+     *  - Enemy ships, nothing happens
+     *  - Bullets reduces the asteroids' life (with low life splits to two smaller asteroids)
+     *  - Player, the player dies
+     * Enemy ship collisions with:
+     *  - Asteroids nothing happens
+     *  - Player ship destroys both ships
+     *  - Bullet reduces the enemy ships' life
+     *  - Enemy ships nothing happens
+     * @param gameData
+     * @param world
+     */
     private void collision(GameData gameData, World world) {
         List<Entity> playerList = new ArrayList<>(world.getEntities(Player.class));
 
@@ -120,99 +137,5 @@ public class CollisionManager implements IPostEntityProcessingService {
         }
 
         return false;
-    }
-
-    /***
-     * Collision detection based on the pythagorean theorem.
-     * Collision is checked between all entities, and handled different depending on what is colliding.
-     * Player collisions with:
-     *  - Asteroids destroys the player ship
-     *  - Bullets reduces the player ship's life
-     *  - Enemy ships destroys both ships
-     * Asteroid collisions with:
-     *  - Other asteroids, nothing happens
-     *  - Enemy ships, nothing happens
-     *  - Bullets reduces the asteroids' life (with low life splits to two smaller asteroids)
-     *  - Player, the player dies
-     * Enemy ship collisions with:
-     *  - Asteroids nothing happens
-     *  - Player ship destroys both ships
-     *  - Bullet reduces the enemy ships' life
-     *  - Enemy ships nothing happens
-     * @param gameData
-     * @param world
-     */
-    private void collisionDetection(GameData gameData, World world) {
-        // Get the player ship
-        Entity playerShip = getPlayerEntity(world);
-
-        // If the player ship is no longer in the game, return
-        if (playerShip == null) {
-            return;
-        }
-
-        // Get the x,y coordinates of the player ship
-        PositionPart playerShipPosition = playerShip.getPart(PositionPart.class);
-        float playerX = playerShipPosition.getX();
-        float playerY = playerShipPosition.getY();
-
-        // Get all entities in the game
-        ArrayList<Entity> enemyEntities = new ArrayList<>(world.getEntities());
-        ArrayList<Entity> asteroids = new ArrayList<>(world.getEntities(Asteroid.class));
-
-        // Check for collisions between player and enemyEntities (Asteroids, bullets, and enemy ships)
-        handlePlayerCollision(playerShip, playerX, playerY, enemyEntities, world);
-
-
-
-
-        //TODO: Detect collision between player and enemy ship DONE
-
-        //TODO: Detect collision between player and bullets (dont care who shot the bullet)
-
-        //TODO: Detect collision between enemy ship and bullets (MAYBE COMBINED WITH PLAYER SHIP)
-    }
-
-    private Entity getPlayerEntity(World world) {
-        List<Entity> playerList = new ArrayList<>(world.getEntities(Player.class));
-
-        if (playerList.isEmpty()) {
-            return null;
-        }
-
-        return playerList.get(0);
-    }
-
-    private void handlePlayerCollision(Entity playerShip, float playerX, float playerY, ArrayList<Entity> enemyEntities, World world){
-        // Enemy entity position uninitialized
-        PositionPart enemyPosition;
-        float enemyX, enemyY;
-
-        // Distance uninitialized, used to hold distance between two entities
-        double distance;
-
-        for (Entity enemy : enemyEntities) {
-            enemyPosition = enemy.getPart(PositionPart.class);
-            enemyX = enemyPosition.getX();
-            enemyY = enemyPosition.getY();
-
-            // Calculate distance between player ship and asteroid
-            distance = Math.sqrt(Math.pow(playerX - enemyX, 2)) + Math.sqrt(Math.pow(playerY - enemyY, 2));
-
-            // If the distance between the two entities is less than the sum of their radii they are colliding
-            if (distance < (playerShip.getRadius() + enemy.getRadius())) {
-
-                if (enemy instanceof Enemy) {
-                    System.out.println("\n********** Ship collided with enemy ship **********\n ");
-                    //world.removeEntity(playerShip);
-                    //world.removeEntity(enemy);
-                }
-                if (enemy instanceof Asteroid) {
-                    System.out.println("\n********** Ship collided with asteroid **********\n ");
-                    //world.removeEntity(playerShip);
-                }
-                //System.out.println("\n********** SHIT **********\n ");
-            }
-        }
     }
 }
