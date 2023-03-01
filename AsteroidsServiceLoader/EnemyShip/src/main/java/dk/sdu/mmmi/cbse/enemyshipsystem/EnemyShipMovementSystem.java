@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.cbse.enemyshipsystem;
 
+import dk.sdu.mmmi.cbse.common.bullet.BulletSPI;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -7,6 +8,7 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.enemy.Enemy;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
+import dk.sdu.mmmi.cbse.common.util.SPILocator;
 
 import java.util.Random;
 
@@ -26,6 +28,13 @@ public class EnemyShipMovementSystem implements IEntityProcessingService {
             MovingPart movingPart = enemyShip.getPart(MovingPart.class);
 
             Random random = new Random();
+
+            // Create bullets from enemy ships
+            if (random.nextInt(1000) < 10) {
+                for (BulletSPI bullet : SPILocator.locateAll(BulletSPI.class)) {
+                    world.addEntity(bullet.createBullet(enemyShip, gameData));
+                }
+            }
 
             // Makes the movement turn more, because "Up" is only true 20% of the time
             boolean shouldMoveUp = random.nextDouble() < 0.8;
