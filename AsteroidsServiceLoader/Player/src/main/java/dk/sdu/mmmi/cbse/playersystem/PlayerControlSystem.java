@@ -26,7 +26,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
             movingPart.setRight(gameData.getKeys().isDown(GameKeys.RIGHT));
             movingPart.setUp(gameData.getKeys().isDown(GameKeys.UP));
 
-            if (gameData.getKeys().isDown(GameKeys.SPACE)) {
+            if (gameData.getKeys().isPressed(GameKeys.SPACE)) {
                 for (BulletSPI bullet : SPILocator.locateAll(BulletSPI.class)) {
                     world.addEntity(bullet.createBullet(player, gameData));
                 }                                            
