@@ -14,11 +14,9 @@
         <module>Core</module>
         <module>Common</module>
         <module>Player</module>
-        <module>Asteroid</module>
         <module>CommonEnemy</module>
         <module>CommonBullet</module>
         <module>CommonAsteroids</module>
-        <module>Bullet</module>
         <module>Enemy</module>
         <module>EnemyShip</module>
         <module>CollisionPythagoreanTheorem</module>
