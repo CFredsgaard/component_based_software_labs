@@ -9,13 +9,14 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>AsteroidShower</artifactId>
+    <artifactId>Asteroid</artifactId>
 
     <properties>
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>dk.sdu.mmmi.cbse</groupId>
