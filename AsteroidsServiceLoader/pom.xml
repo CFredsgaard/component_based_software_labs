@@ -22,6 +22,7 @@
         <module>Enemy</module>
         <module>EnemyShip</module>
         <module>CollisionPythagoreanTheorem</module>
+        <module>AsteroidShower</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>        

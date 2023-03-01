@@ -70,7 +70,7 @@
         </dependency>
         <dependency>
             <groupId>dk.sdu.mmmi.cbse</groupId>
-            <artifactId>Asteroid</artifactId>
+            <artifactId>AsteroidShower</artifactId>
             <version>1.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
