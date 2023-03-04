@@ -16,27 +16,34 @@ public class PlayerPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-
         // Add entities to the world
         player = createPlayerShip(gameData);
         world.addEntity(player);
     }
 
     private Entity createPlayerShip(GameData gameData) {
-
+        // Create moving part variables
         float deceleration = 10;
         float acceleration = 200;
         float maxSpeed = 300;
         float rotationSpeed = 5;
-        float x = gameData.getDisplayWidth() / 2;
-        float y = gameData.getDisplayHeight() / 2;
+
+        // Create position part variables
+        float x = gameData.getDisplayWidth() / 2f;
+        float y = gameData.getDisplayHeight() / 2f;
         float radians = 3.1415f / 2;
 
+        // Create Life part variables
+        int life = 20;
+
+        // Create the player ship and add the parts
         Entity playerShip = new Player();
-        playerShip.setRadius(10);
         playerShip.add(new MovingPart(deceleration, acceleration, maxSpeed, rotationSpeed));
         playerShip.add(new PositionPart(x, y, radians));
-        playerShip.add(new LifePart(1));
+        playerShip.add(new LifePart(life));
+
+        // Give the ship a radius
+        playerShip.setRadius(10);
 
         return playerShip;
     }

@@ -80,7 +80,7 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI 
         float rotationSpeed = 0;
 
         // Define the offset distance from the spaceship to the bullet
-        int offsetDistance = 15;
+        int offsetDistance = 20;
         // Calculate the x and y components of the offset vector
         float offsetX = (float) (offsetDistance * Math.cos(shipPosition.getRadians()));
         float offsetY = (float) (offsetDistance * Math.sin(shipPosition.getRadians()));

@@ -71,7 +71,7 @@ public class AsteroidFactory {
                 // LifePart Data
                 life = AsteroidLife.SMALL_LIFE.getLife();
                 expiration = 15.3f;
-                asteroid.setRadius(5);
+                asteroid.setRadius(8);
             }
         }
 

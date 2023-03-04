@@ -1,7 +1,6 @@
 package dk.sdu.mmmi.cbse.collisionPythagoreanTheorem;
 
-
-import dk.sdu.mmmi.cbse.common.asteroids.Asteroid;
+import dk.sdu.mmmi.cbse.asteroidsystem.Asteroid;
 import dk.sdu.mmmi.cbse.common.bullet.Bullet;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
@@ -132,10 +131,6 @@ public class CollisionManager implements IPostEntityProcessingService {
         double distance = Math.sqrt(Math.pow(aX - bX, 2)) + Math.sqrt(Math.pow(aY - bY, 2));
 
         // If the distance between the two entities is less than the sum of their radii they are colliding
-        if (distance < (entityA.getRadius() + entityB.getRadius())) {
-            return true;
-        }
-
-        return false;
+        return distance < (entityA.getRadius() + entityB.getRadius());
     }
 }

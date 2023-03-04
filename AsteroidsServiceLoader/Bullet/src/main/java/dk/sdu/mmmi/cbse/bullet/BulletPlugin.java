@@ -29,47 +29,6 @@ public class BulletPlugin implements IGamePluginService {
         // There are no bullets at the beginning of the game, these need to be created during the game
     }
 
-    /*
-    protected Entity createBullet(Entity ship) {
-        // Create moving part variables
-        float deceleration = 0;
-        float acceleration = 1000000;
-        float maxSpeed = 400;
-        float rotationSpeed = 0;
-
-        // Get the position part for the spaceship
-        PositionPart shipPosition = ship.getPart(PositionPart.class);
-
-        // Define the offset distance from the spaceship to the bullet
-        int offsetDistance = 15;
-        // Calculate the x and y components of the offset vector
-        float offsetX = (float) (offsetDistance * Math.cos(shipPosition.getRadians()));
-        float offsetY = (float) (offsetDistance * Math.sin(shipPosition.getRadians()));
-
-        // Create position part variables for the bullet form the play ships position and the offset
-        float bulletX = shipPosition.getX() + offsetX;
-        float bulletY = shipPosition.getY() + offsetY;
-        float radians = shipPosition.getRadians();
-
-        // Create life part variables for the bullet
-        int life = 1;
-        float expiration = 10;
-
-        // Create the bullet and add the parts
-        Entity bullet = new Bullet();
-        bullet.add(new MovingPart(deceleration, acceleration, maxSpeed, rotationSpeed));
-        bullet.add(new PositionPart(bulletX, bulletY, radians));
-        bullet.add(new LifePart(life, expiration));
-
-        // Give the bullet a radius, used for determining collision
-        bullet.setRadius(3);
-
-        // Return the bullet
-        return bullet;
-    }
-
-     */ //TODO: CREATE BULLET
-
     /**
      * Stops the game
      *
