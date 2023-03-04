@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.cbse.asteroidsystem;
 
+import dk.sdu.mmmi.cbse.common.asteroids.IAsteroidSplitter;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -14,7 +15,7 @@ import java.util.Random;
 import static dk.sdu.mmmi.cbse.asteroidsystem.AsteroidLife.*;
 import static dk.sdu.mmmi.cbse.asteroidsystem.AsteroidSize.*;
 
-public class AsteroidControlSystem implements IEntityProcessingService {
+public class AsteroidControlSystem implements IEntityProcessingService, IAsteroidSplitter {
 
     Random random = new Random();
     AsteroidFactory asteroidFactory = new AsteroidFactory();
@@ -33,7 +34,8 @@ public class AsteroidControlSystem implements IEntityProcessingService {
         }
     }
 
-    private void createChildAsteroids(Entity parentAsteroid, AsteroidSize size, GameData gameData, World world) {
+    @Override
+    public void createSplitAsteroid(Entity parentAsteroid, GameData gameData, World world) {
         PositionPart parentAsteroidPosition = parentAsteroid.getPart(PositionPart.class);
         float parentX = parentAsteroidPosition.getX();
         float parentY = parentAsteroidPosition.getY();
@@ -42,6 +44,8 @@ public class AsteroidControlSystem implements IEntityProcessingService {
         // Create the child asteroids and give them the parents position
         Asteroid childAsteroid1 = null;
         Asteroid childAsteroid2 = null;
+
+        AsteroidSize size = ((Asteroid) parentAsteroid).getAsteroidSize();
 
         // Create two large asteroids
         if (size.equals(GIANT_SIZE)) {
@@ -81,11 +85,11 @@ public class AsteroidControlSystem implements IEntityProcessingService {
             world.removeEntity(asteroid);
         }
         else if (size == GIANT_SIZE && asteroidLife <= LARGE_LIFE.getLife()) {
-            createChildAsteroids(asteroid, size, gameData, world);
+            createSplitAsteroid(asteroid, gameData, world);
         } else if (size == LARGE_SIZE && asteroidLife <= MEDIUM_LIFE.getLife()) {
-            createChildAsteroids(asteroid, size, gameData, world);
+            createSplitAsteroid(asteroid, gameData, world);
         } else if (size == MEDIUM_SIZE && asteroidLife <= SMALL_LIFE.getLife()) {
-            createChildAsteroids(asteroid, size, gameData, world);
+            createSplitAsteroid(asteroid, gameData, world);
         }
     }
 
@@ -149,4 +153,6 @@ public class AsteroidControlSystem implements IEntityProcessingService {
         }
         return 4;
     }
+
+
 }
