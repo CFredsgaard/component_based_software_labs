@@ -22,15 +22,15 @@
         <module>CollisionPythagoreanTheorem</module>
         <module>Asteroid</module>
         <module>Bullet</module>
+        <module>CommonPlayer</module>
     </modules>
     <properties>
-        <java>java</java> <!-- Added to use JPMS -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>        
+        <java>java</java>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.9</maven.compiler.source>
         <maven.compiler.target>1.9</maven.compiler.target>
     </properties>
 
-    <!-- All below is added to run JPMS -->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -40,7 +40,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
     <build>
         <plugins>
             <plugin>
@@ -72,7 +71,7 @@
                     <workingDirectory>.</workingDirectory>
                     <longModulepath>false</longModulepath>
                     <arguments>
-                        <argument>-XstartOnFirstThread</argument> <!-- Has to be included when running on macOS -->
+                        <argument>-XstartOnFirstThread</argument> <!-- On Mac Devices this line should not be commented out -->
                         <argument>-Dorg.lwjgl.util.Debug=true</argument>
                         <argument>-Djava.library.path=libs</argument>
                         <argument>--module-path=mods-mvn</argument>
@@ -157,5 +156,4 @@
             </build>
         </profile>
     </profiles>
-
 </project>
