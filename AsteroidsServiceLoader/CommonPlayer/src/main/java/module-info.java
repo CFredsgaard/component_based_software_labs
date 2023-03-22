@@ -1,5 +1,5 @@
-module dk.sdu.mmmi.cbse.common.player {
-    requires dk.sdu.mmmi.cbse.common;
+module CommonPlayer {
+    requires Common;
 
     // Exports
     exports dk.sdu.mmmi.cbse.common.player;

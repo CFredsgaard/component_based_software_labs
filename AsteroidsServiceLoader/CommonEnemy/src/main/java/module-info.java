@@ -1,5 +1,5 @@
-module dk.sdu.mmmi.cbse.common.enemy {
-    requires dk.sdu.mmmi.cbse.common;
+module CommonEnemy {
+    requires Common;
 
     // Exports
     exports dk.sdu.mmmi.cbse.common.enemy;

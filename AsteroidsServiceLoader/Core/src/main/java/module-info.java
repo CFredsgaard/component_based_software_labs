@@ -1,9 +1,9 @@
-module dk.sdu.mmmi.cbse.main {
-    requires dk.sdu.mmmi.cbse.common;
-    requires dk.sdu.mmmi.cbse.common.bullet;
-    requires dk.sdu.mmmi.cbse.common.asteroids;
-    requires dk.sdu.mmmi.cbse.common.enemy;
-    requires dk.sdu.mmmi.cbse.common.player;
+module Core {
+    requires Common;
+    requires CommonAsteroids;
+    requires CommonEnemy;
+    requires CommonPlayer;
+    requires CommonBullet;
     requires java.desktop;
     requires com.badlogic.gdx;
     requires gdx.backend.lwjgl; // This fixed the issue with clean install not finding libgdx package

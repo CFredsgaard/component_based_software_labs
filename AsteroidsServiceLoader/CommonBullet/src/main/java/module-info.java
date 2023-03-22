@@ -1,5 +1,5 @@
-module dk.sdu.mmmi.cbse.common.bullet {
-    requires dk.sdu.mmmi.cbse.common;
+module CommonBullet {
+    requires Common;
 
     // Exports
     exports dk.sdu.mmmi.cbse.common.bullet;

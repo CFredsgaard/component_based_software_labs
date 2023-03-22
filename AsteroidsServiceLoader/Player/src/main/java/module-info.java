@@ -1,6 +1,6 @@
-module dk.sdu.mmmi.cbse.playersystem {
-    requires dk.sdu.mmmi.cbse.common;
-    requires dk.sdu.mmmi.cbse.common.bullet;
-    requires dk.sdu.mmmi.cbse.common.player;
+module Player {
+    requires Common;
+    requires CommonBullet;
+    requires CommonPlayer;
 
 }

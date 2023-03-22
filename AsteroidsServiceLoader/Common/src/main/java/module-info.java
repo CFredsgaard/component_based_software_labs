@@ -1,4 +1,4 @@
-module dk.sdu.mmmi.cbse.common {
+module Common {
     //Requires nothing, is required by every other module
 
     // Exports
