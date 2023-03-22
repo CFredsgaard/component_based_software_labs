@@ -8,9 +8,13 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.enemy.Enemy;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
-import dk.sdu.mmmi.cbse.common.util.SPILocator;
+//import dk.sdu.mmmi.cbse.common.util.SPILocator;
 
+import java.util.Collection;
 import java.util.Random;
+import java.util.ServiceLoader;
+
+import static java.util.stream.Collectors.toList;
 
 public class EnemyShipMovementSystem implements IEntityProcessingService {
 
@@ -31,7 +35,7 @@ public class EnemyShipMovementSystem implements IEntityProcessingService {
 
             // Create bullets from enemy ships
             if (random.nextInt(1000) < 10) {
-                for (BulletSPI bullet : SPILocator.locateAll(BulletSPI.class)) {
+                for (BulletSPI bullet : getBulletSPIs()) {
                     world.addEntity(bullet.createBullet(enemyShip, gameData));
                 }
             }
@@ -47,6 +51,10 @@ public class EnemyShipMovementSystem implements IEntityProcessingService {
 
             updateShape(enemyShip);
         }
+    }
+
+    private Collection<? extends BulletSPI> getBulletSPIs() {
+        return ServiceLoader.load(BulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 
     // Update the position of the ship
