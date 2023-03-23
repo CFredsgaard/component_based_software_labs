@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.cbse.asteroidsystem;
 
+import dk.sdu.mmmi.cbse.common.asteroids.Asteroid;
 import dk.sdu.mmmi.cbse.common.asteroids.IAsteroidSplitter;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
@@ -7,6 +8,7 @@ import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
+import dk.sdu.mmmi.cbse.common.data.entityparts.SizePart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 
 import java.util.ArrayList;
@@ -36,16 +38,20 @@ public class AsteroidControlSystem implements IEntityProcessingService, IAsteroi
 
     @Override
     public void createSplitAsteroid(Entity parentAsteroid, GameData gameData, World world) {
+        // Parent Asteroid Position Data
         PositionPart parentAsteroidPosition = parentAsteroid.getPart(PositionPart.class);
         float parentX = parentAsteroidPosition.getX();
         float parentY = parentAsteroidPosition.getY();
         float parentRadians = parentAsteroidPosition.getRadians();
 
-        // Create the child asteroids and give them the parents position
-        Asteroid childAsteroid1 = null;
-        Asteroid childAsteroid2 = null;
+        // Parent Asteroid Size Data, get it from part and turn it into enum value
+        SizePart parentAsteroidSize = parentAsteroid.getPart(SizePart.class);
+        AsteroidSize size = AsteroidSize.valueOf(parentAsteroidSize.getSize());
 
-        AsteroidSize size = ((Asteroid) parentAsteroid).getAsteroidSize();
+
+        // Create the child asteroids and give them the parents position
+        Entity childAsteroid1 = null;
+        Entity childAsteroid2 = null;
 
         // Create two large asteroids
         if (size.equals(GIANT_SIZE)) {
@@ -76,10 +82,13 @@ public class AsteroidControlSystem implements IEntityProcessingService, IAsteroi
 
 
     private void handleAsteroidLifeStatus(Entity asteroid, GameData gameData, World world) {
+        // Get Life info
         LifePart asteroidLifePart = asteroid.getPart(LifePart.class);
         int asteroidLife = asteroidLifePart.getLife();
 
-        AsteroidSize size = ((Asteroid) asteroid).getAsteroidSize();
+        // Get Size info
+        SizePart asteroidSizePart = asteroid.getPart(SizePart.class);
+        AsteroidSize size = AsteroidSize.valueOf(asteroidSizePart.getSize());
 
         if (asteroidLife <= 0) {
             world.removeEntity(asteroid);
@@ -139,20 +148,19 @@ public class AsteroidControlSystem implements IEntityProcessingService, IAsteroi
 
     private int getNumberOfCorners(Entity asteroid) {
         // Find the size of the asteroid
-        AsteroidSize size = ((Asteroid) asteroid).getAsteroidSize();
+        SizePart asteroidSizePart = asteroid.getPart(SizePart.class);
+        AsteroidSize size = AsteroidSize.valueOf(asteroidSizePart.getSize());
 
         // Size determines number of corners
         if (size.equals(GIANT_SIZE)) {
             return 15;
         }
-        if (size.equals(AsteroidSize.LARGE_SIZE)) {
+        if (size.equals(LARGE_SIZE)) {
             return 8;
         }
-        if (size.equals(AsteroidSize.MEDIUM_SIZE)) {
+        if (size.equals(MEDIUM_SIZE)) {
             return 6;
         }
         return 4;
     }
-
-
 }
