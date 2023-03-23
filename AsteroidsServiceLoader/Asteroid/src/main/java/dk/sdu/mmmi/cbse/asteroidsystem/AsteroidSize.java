@@ -1,10 +1,10 @@
 package dk.sdu.mmmi.cbse.asteroidsystem;
 
 public enum AsteroidSize {
-    GIANT_SIZE("GIANT"),
-    LARGE_SIZE("LARGE"),
-    MEDIUM_SIZE("MEDIUM"),
-    SMALL_SIZE("SMALL");
+    GIANT_SIZE("GIANT_SIZE"),
+    LARGE_SIZE("LARGE_SIZE"),
+    MEDIUM_SIZE("MEDIUM_SIZE"),
+    SMALL_SIZE("SMALL_SIZE");
 
     private String size;
 
@@ -12,7 +12,7 @@ public enum AsteroidSize {
         this.size = size;
     }
 
-    public String getSize() {
+    public String getAsteroidSize() {
         return size;
     }
 }
