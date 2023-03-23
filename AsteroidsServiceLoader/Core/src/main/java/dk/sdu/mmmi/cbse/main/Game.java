@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.ServiceLoader;
-
 import static java.util.stream.Collectors.toList;
 
 public class Game
@@ -86,7 +85,6 @@ public class Game
 
     private void draw() {
         for (Entity entity : world.getEntities()) {
-
             // Set the color depending on the type of entity
             if (entity instanceof Player) {
                 shapeRenderer.setColor(0, 1, 0, 1);
