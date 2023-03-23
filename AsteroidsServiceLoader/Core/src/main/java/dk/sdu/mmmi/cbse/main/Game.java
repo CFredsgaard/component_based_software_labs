@@ -89,7 +89,7 @@ public class Game
             if (entity instanceof Player) {
                 shapeRenderer.setColor(0, 1, 0, 1);
             } else if (entity instanceof Enemy) {
-                shapeRenderer.setColor(1, 0, 0, 1);
+                shapeRenderer.setColor(1, 0, 1, 1);
             } else if (entity instanceof Bullet) {
                 shapeRenderer.setColor(1, 0.5f, 0.5f, 1);
             } else if (entity instanceof Asteroid){
