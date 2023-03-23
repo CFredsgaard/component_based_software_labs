@@ -5,6 +5,8 @@ module CollisionPythagoreanTheorem {
     requires Common;
     requires CommonAsteroids;
     requires CommonEnemy;
+    requires CommonPlayer;
+    requires CommonBullet;
     //requires dk.sdu.mmmi.cbse.playersystem;
     //requires dk.sdu.mmmi.cbse.asteroidsystem;
 

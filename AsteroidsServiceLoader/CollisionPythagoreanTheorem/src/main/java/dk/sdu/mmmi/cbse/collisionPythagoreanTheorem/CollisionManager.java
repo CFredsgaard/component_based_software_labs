@@ -1,15 +1,15 @@
 package dk.sdu.mmmi.cbse.collisionPythagoreanTheorem;
 
-//import dk.sdu.mmmi.cbse.asteroidsystem.Asteroid;
-//import dk.sdu.mmmi.cbse.common.bullet.Bullet;
+import dk.sdu.mmmi.cbse.common.asteroids.Asteroid;
+import dk.sdu.mmmi.cbse.common.bullet.Bullet;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
-//import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
+import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
-//import dk.sdu.mmmi.cbse.common.enemy.Enemy;
+import dk.sdu.mmmi.cbse.common.enemy.Enemy;
+import dk.sdu.mmmi.cbse.common.player.Player;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
-//import dk.sdu.mmmi.cbse.playersystem.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,14 +50,6 @@ public class CollisionManager implements IPostEntityProcessingService {
     private void collision(GameData gameData, World world) {
         List<Entity> entities = new ArrayList<>(world.getEntities());
 
-        for (int i = 0; i < entities.size(); i++) {
-            if (isColliding(entities.get(i), entities.get(i+1))) {
-                System.out.println("Collision happening ");
-            }
-        }
-
-
-        /*
         List<Entity> playerList = new ArrayList<>(world.getEntities(Player.class));
 
         // Stop if the Player is no longer in the game, no reason to check for collisions
@@ -117,6 +109,7 @@ public class CollisionManager implements IPostEntityProcessingService {
             // Asteroid and Bullet
             for (Entity asteroid : asteroids) {
                 if (isColliding(asteroid, bullet)) {
+                    System.out.println("Asteroid + bullet");
                     // Reduce asteroid life
                     LifePart asteroidLife = asteroid.getPart(LifePart.class);
                     asteroidLife.setLife(asteroidLife.getLife() - 1);
@@ -125,7 +118,7 @@ public class CollisionManager implements IPostEntityProcessingService {
                 }
             }
         }
-        */
+
     }
 
     private boolean isColliding(Entity entityA, Entity entityB) {
