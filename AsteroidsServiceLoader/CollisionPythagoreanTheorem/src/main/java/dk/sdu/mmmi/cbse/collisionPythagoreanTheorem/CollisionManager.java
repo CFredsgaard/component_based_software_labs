@@ -48,8 +48,6 @@ public class CollisionManager implements IPostEntityProcessingService {
      * @param world
      */
     private void collision(GameData gameData, World world) {
-        List<Entity> entities = new ArrayList<>(world.getEntities());
-
         List<Entity> playerList = new ArrayList<>(world.getEntities(Player.class));
 
         // Stop if the Player is no longer in the game, no reason to check for collisions
@@ -69,7 +67,7 @@ public class CollisionManager implements IPostEntityProcessingService {
         // PlayerShip and Asteroid Collision
         for (Entity asteroid : asteroids) {
             if (isColliding(playerShip, asteroid)) {
-                System.out.println("ASTEROID COLLISION \n");
+                System.out.println("ASTEROID AND PLAYER COLLISION \n");
                 // Remove player ship
                 // world.removeEntity(playerShip);
             }
@@ -78,7 +76,7 @@ public class CollisionManager implements IPostEntityProcessingService {
         // PlayerShip and EnemyShip Collision
         for (Entity enemyShip : enemyShips) {
             if (isColliding(playerShip, enemyShip)) {
-                System.out.println("Enemy Ship Collision \n");
+                System.out.println("ENEMY AND PLAYER COLLISION\n");
                 // Remove both entities from game
                 // world.removeEntity(playerShip);
                 world.removeEntity(enemyShip);
@@ -109,7 +107,6 @@ public class CollisionManager implements IPostEntityProcessingService {
             // Asteroid and Bullet
             for (Entity asteroid : asteroids) {
                 if (isColliding(asteroid, bullet)) {
-                    System.out.println("Asteroid + bullet");
                     // Reduce asteroid life
                     LifePart asteroidLife = asteroid.getPart(LifePart.class);
                     asteroidLife.setLife(asteroidLife.getLife() - 1);
