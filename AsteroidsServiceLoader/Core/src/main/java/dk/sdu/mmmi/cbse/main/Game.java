@@ -91,7 +91,8 @@ public class Game
         for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
             entityProcessorService.process(gameData, world);
         }
-         for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
+        // Post update
+        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
             postEntityProcessorService.process(gameData, world);
         }
     }
@@ -104,23 +105,26 @@ public class Game
             } else if (entity instanceof Enemy) {
                 shapeRenderer.setColor(1, 0, 1, 1);
             } else if (entity instanceof Bullet) {
-                shapeRenderer.setColor(1, 0.5f, 0.5f, 1);
+                shapeRenderer.setColor(0, 1, 1, 1);
             } else if (entity instanceof Asteroid){
                 shapeRenderer.setColor(1, 1, 0, 1);
             } else {
                 shapeRenderer.setColor(1, 1, 1, 1);
             }
 
+            // Gives them thick lines by filling in the rectangles
+            // shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 
-            float[] shapex = entity.getShapeX();
-            float[] shapey = entity.getShapeY();
+            float[] shapeX = entity.getShapeX();
+            float[] shapeY = entity.getShapeY();
 
-            for (int i = 0, j = shapex.length - 1;
-                    i < shapex.length;
+            for (int i = 0, j = shapeX.length - 1;
+                    i < shapeX.length;
                     j = i++) {
 
-                shapeRenderer.line(shapex[i], shapey[i], shapex[j], shapey[j]);
+                shapeRenderer.rectLine(shapeX[i], shapeY[i], shapeX[j], shapeY[j], 5);
+                //shapeRenderer.line(shapeX[i], shapeY[i], shapeX[j], shapeY[j]);
             }
 
             shapeRenderer.end();
@@ -149,12 +153,12 @@ public class Game
     }
 
     private Collection<? extends IEntityProcessingService> getEntityProcessingServices() {
-        //return SPILocator.locateAll(IEntityProcessingService.class);
+        //return SPILocator.locateAll(IEntityProcessingService.class); // Before changing to JPMS
         return ServiceLoader.load(IEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
     
        private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
-        //return SPILocator.locateAll(IPostEntityProcessingService.class);
+        //return SPILocator.locateAll(IPostEntityProcessingService.class); // Before changing to JPMS
         return ServiceLoader.load(IPostEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }
