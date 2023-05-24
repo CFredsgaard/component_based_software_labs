@@ -6,6 +6,7 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
+import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.enemy.Enemy;
 import dk.sdu.mmmi.cbse.common.player.Player;
@@ -23,7 +24,7 @@ public class CollisionManager implements IPostEntityProcessingService {
      */
     @Override
     public void process(GameData gameData, World world) {
-        collision(gameData, world);
+        collision(world);
     }
 
 
@@ -44,10 +45,10 @@ public class CollisionManager implements IPostEntityProcessingService {
      *  - Player ship destroys both ships
      *  - Bullet reduces the enemy ships' life
      *  - Enemy ships nothing happens
-     * @param gameData
+     *
      * @param world
      */
-    private void collision(GameData gameData, World world) {
+    private void collision(World world) {
         List<Entity> playerList = new ArrayList<>(world.getEntities(Player.class));
 
         // Stop if the Player is no longer in the game, no reason to check for collisions
@@ -69,7 +70,10 @@ public class CollisionManager implements IPostEntityProcessingService {
             if (isColliding(playerShip, asteroid)) {
                 System.out.println("ASTEROID AND PLAYER COLLISION \n");
                 // Remove player ship
-                // world.removeEntity(playerShip);
+                world.removeEntity(playerShip);
+
+                LifePart asteroidLife = asteroid.getPart(LifePart.class);
+                asteroidLife.setLife(asteroidLife.getLife() - 1);
             }
         }
 
@@ -78,7 +82,7 @@ public class CollisionManager implements IPostEntityProcessingService {
             if (isColliding(playerShip, enemyShip)) {
                 System.out.println("ENEMY AND PLAYER COLLISION\n");
                 // Remove both entities from game
-                // world.removeEntity(playerShip);
+                world.removeEntity(playerShip);
                 world.removeEntity(enemyShip);
             }
         }
@@ -115,7 +119,6 @@ public class CollisionManager implements IPostEntityProcessingService {
                 }
             }
         }
-
     }
 
     private boolean isColliding(Entity entityA, Entity entityB) {
