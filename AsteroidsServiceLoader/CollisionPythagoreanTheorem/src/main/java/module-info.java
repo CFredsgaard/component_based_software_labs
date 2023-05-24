@@ -7,8 +7,6 @@ module CollisionPythagoreanTheorem {
     requires CommonEnemy;
     requires CommonPlayer;
     requires CommonBullet;
-    //requires dk.sdu.mmmi.cbse.playersystem;
-    //requires dk.sdu.mmmi.cbse.asteroidsystem;
 
     provides IPostEntityProcessingService with dk.sdu.mmmi.cbse.collisionPythagoreanTheorem.CollisionManager;
 }
