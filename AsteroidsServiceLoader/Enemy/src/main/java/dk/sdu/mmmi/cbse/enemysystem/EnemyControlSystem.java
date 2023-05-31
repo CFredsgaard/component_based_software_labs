@@ -14,6 +14,7 @@ public class EnemyControlSystem implements IEntityProcessingService {
 
     private Entity enemy;
 
+
     @Override
     public void process(GameData gameData, World world) {
 

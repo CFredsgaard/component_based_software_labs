@@ -1,4 +1,4 @@
-import dk.sdu.mmmi.cbse.common.bullet.BulletSPI;
+import dk.sdu.mmmi.cbse.common.bullet.IBulletSPI;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 
@@ -8,5 +8,5 @@ module Bullet {
 
     provides IGamePluginService with dk.sdu.mmmi.cbse.bullet.BulletPlugin;
     provides IEntityProcessingService with dk.sdu.mmmi.cbse.bullet.BulletControlSystem;
-    provides BulletSPI with dk.sdu.mmmi.cbse.bullet.BulletControlSystem;
+    provides IBulletSPI with dk.sdu.mmmi.cbse.bullet.BulletControlSystem;
 }

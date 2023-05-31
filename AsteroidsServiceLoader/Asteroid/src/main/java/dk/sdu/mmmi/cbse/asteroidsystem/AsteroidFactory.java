@@ -140,5 +140,4 @@ public class AsteroidFactory {
         asteroid.add(randomPosition(gameData));
         return asteroid;
     }
-    
 }

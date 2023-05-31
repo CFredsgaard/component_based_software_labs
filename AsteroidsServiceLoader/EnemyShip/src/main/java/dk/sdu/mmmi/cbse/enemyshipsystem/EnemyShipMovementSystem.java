@@ -1,6 +1,6 @@
 package dk.sdu.mmmi.cbse.enemyshipsystem;
 
-import dk.sdu.mmmi.cbse.common.bullet.BulletSPI;
+import dk.sdu.mmmi.cbse.common.bullet.IBulletSPI;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -35,8 +35,8 @@ public class EnemyShipMovementSystem implements IEntityProcessingService {
 
             // Create bullets from enemy ships
             if (random.nextInt(1000) < 10) {
-                for (BulletSPI bullet : getBulletSPIs()) {
-                    world.addEntity(bullet.createBullet(enemyShip, gameData));
+                for (IBulletSPI bullet : getBulletSPIs()) {
+                    world.addEntity(bullet.createBullet(enemyShip));
                 }
             }
 
@@ -53,8 +53,8 @@ public class EnemyShipMovementSystem implements IEntityProcessingService {
         }
     }
 
-    private Collection<? extends BulletSPI> getBulletSPIs() {
-        return ServiceLoader.load(BulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    private Collection<? extends IBulletSPI> getBulletSPIs() {
+        return ServiceLoader.load(IBulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 
     // Update the position of the ship

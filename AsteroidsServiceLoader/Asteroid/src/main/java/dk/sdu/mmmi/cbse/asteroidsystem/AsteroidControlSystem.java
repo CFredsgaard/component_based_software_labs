@@ -1,7 +1,7 @@
 package dk.sdu.mmmi.cbse.asteroidsystem;
 
 import dk.sdu.mmmi.cbse.common.asteroids.Asteroid;
-import dk.sdu.mmmi.cbse.common.asteroids.IAsteroidSplitter;
+import dk.sdu.mmmi.cbse.common.asteroids.IAsteroidSplitterSPI;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -17,7 +17,7 @@ import java.util.Random;
 import static dk.sdu.mmmi.cbse.asteroidsystem.AsteroidLife.*;
 import static dk.sdu.mmmi.cbse.asteroidsystem.AsteroidSize.*;
 
-public class AsteroidControlSystem implements IEntityProcessingService, IAsteroidSplitter {
+public class AsteroidControlSystem implements IEntityProcessingService, IAsteroidSplitterSPI {
 
     Random random = new Random();
     AsteroidFactory asteroidFactory = new AsteroidFactory();
@@ -37,7 +37,7 @@ public class AsteroidControlSystem implements IEntityProcessingService, IAsteroi
     }
 
     @Override
-    public void createSplitAsteroid(Entity parentAsteroid, GameData gameData, World world) {
+    public void splitAsteroid(Entity parentAsteroid, GameData gameData, World world) {
         // Parent Asteroid Position Data
         PositionPart parentAsteroidPosition = parentAsteroid.getPart(PositionPart.class);
         float parentX = parentAsteroidPosition.getX();
@@ -94,11 +94,11 @@ public class AsteroidControlSystem implements IEntityProcessingService, IAsteroi
             world.removeEntity(asteroid);
         }
         else if (size == GIANT_SIZE && asteroidLife <= LARGE_LIFE.getLife()) {
-            createSplitAsteroid(asteroid, gameData, world);
+            splitAsteroid(asteroid, gameData, world);
         } else if (size == LARGE_SIZE && asteroidLife <= MEDIUM_LIFE.getLife()) {
-            createSplitAsteroid(asteroid, gameData, world);
+            splitAsteroid(asteroid, gameData, world);
         } else if (size == MEDIUM_SIZE && asteroidLife <= SMALL_LIFE.getLife()) {
-            createSplitAsteroid(asteroid, gameData, world);
+            splitAsteroid(asteroid, gameData, world);
         }
     }
 

@@ -16,10 +16,10 @@
         <module>Player</module>
         <module>CommonEnemy</module>
         <module>CommonBullet</module>
-        <module>CommonAsteroids</module>
+        <module>CommonAsteroid</module>
         <module>Enemy</module>
         <module>EnemyShip</module>
-        <module>CollisionPythagoreanTheorem</module>
+        <module>Collision</module>
         <module>Asteroid</module>
         <module>Bullet</module>
         <module>CommonPlayer</module>
