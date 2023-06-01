@@ -77,49 +77,23 @@ class CollisionManagerTest {
         enemyList.clear();
     }
 
-    public Entity mockPlayerWithPositionAndLife(PositionPart positionPart) {
-        Entity player = mock(Player.class);
-        when(player.getPart(PositionPart.class)).thenReturn(positionPart);
-        lenient().when(player.getPart(LifePart.class)).thenReturn(new LifePart(10));
-        when(player.getRadius()).thenReturn(5f);
-        playerList.add(player);
-        return player;
-    }
-
-    public Entity mockEnemyWithPositionAndLife(PositionPart positionPart) {
-        Entity enemy = mock(Enemy.class);
-        when(enemy.getPart(PositionPart.class)).thenReturn(positionPart);
-        lenient().when(enemy.getPart(LifePart.class)).thenReturn(new LifePart(10));
-        when(enemy.getRadius()).thenReturn(5f);
-        enemyList.add(enemy);
-        return enemy;
-    }
-
-    public Entity mockBulletWithPosition(PositionPart positionPart) {
-        Entity bullet = mock(Bullet.class);
-        when(bullet.getPart(PositionPart.class)).thenReturn(positionPart);
-        when(bullet.getRadius()).thenReturn(1f);
-        bulletList.add(bullet);
-        return bullet;
-    }
-
-    public Entity mockAsteroidWithPositionAndLife(PositionPart positionPart) {
-        Entity asteroid = mock(Asteroid.class);
-        when(asteroid.getPart(PositionPart.class)).thenReturn(positionPart);
-        lenient().when(asteroid.getPart(LifePart.class)).thenReturn(new LifePart(10));
-        when(asteroid.getRadius()).thenReturn(10f);
-        asteroidsList.add(asteroid);
-        return asteroid;
+    public Entity mockEntityWithPositionAndLife(PositionPart positionPart, Class<?extends Entity> entityClass, List<Entity> entityList ) {
+        Entity entity = mock(entityClass);
+        when(entity.getPart(PositionPart.class)).thenReturn(positionPart);
+        lenient().when(entity.getPart(LifePart.class)).thenReturn(new LifePart(10));
+        when(entity.getRadius()).thenReturn(5f);
+        entityList.add(entity);
+        return entity;
     }
 
     @Test
     void bullet_asteroid_same_position_colliding() {
         // Player needs to be present for the game to process other collisions
-        mockPlayerWithPositionAndLife(positionPart_B);
+        mockEntityWithPositionAndLife(positionPart_A, Player.class, playerList);
 
         // Entities that are colliding
-        Entity bullet = mockBulletWithPosition(positionPart_A);
-        Entity asteroid = mockAsteroidWithPositionAndLife(positionPart_A);
+        Entity bullet = mockEntityWithPositionAndLife(positionPart_B, Bullet.class, bulletList);
+        Entity asteroid = mockEntityWithPositionAndLife(positionPart_B, Asteroid.class, asteroidsList);
 
         collisionManager.process(gameData, world);
 
@@ -132,8 +106,8 @@ class CollisionManagerTest {
 
     @Test
     void bullet_player_same_position_colliding() {
-        Entity bullet = mockBulletWithPosition(positionPart_A);
-        Entity player = mockPlayerWithPositionAndLife(positionPart_A);
+        Entity bullet = mockEntityWithPositionAndLife(positionPart_A, Bullet.class, bulletList);
+        Entity player = mockEntityWithPositionAndLife(positionPart_A, Player.class, playerList);
 
         collisionManager.process(gameData, world);
 
@@ -143,11 +117,11 @@ class CollisionManagerTest {
 
     @Test
     void bullet_enemy_same_position_colliding() {
-        mockPlayerWithPositionAndLife(positionPart_A);
+        mockEntityWithPositionAndLife(positionPart_A, Player.class, playerList);
 
         // Create Bullet and Enemy at same position
-        Entity bullet = mockBulletWithPosition(positionPart_B);
-        Entity enemy = mockEnemyWithPositionAndLife(positionPart_B);
+        Entity bullet = mockEntityWithPositionAndLife(positionPart_B, Bullet.class, bulletList);
+        Entity enemy = mockEntityWithPositionAndLife(positionPart_B, Enemy.class, enemyList);
 
         collisionManager.process(gameData, world);
 
@@ -157,11 +131,11 @@ class CollisionManagerTest {
 
     @Test
     void bullet_bullet_same_position_not_colliding() {
-        mockPlayerWithPositionAndLife(positionPart_A);
+        mockEntityWithPositionAndLife(positionPart_A, Player.class, playerList);
 
         // Create two bullets with the same position
-        Entity bullet_1 = mockBulletWithPosition(positionPart_B);
-        Entity bullet_2 = mockBulletWithPosition(positionPart_B);
+        Entity bullet_1 = mockEntityWithPositionAndLife(positionPart_B, Bullet.class, bulletList);
+        Entity bullet_2 = mockEntityWithPositionAndLife(positionPart_B, Bullet.class, bulletList);
 
         collisionManager.process(gameData, world);
 
@@ -174,8 +148,8 @@ class CollisionManagerTest {
      */
     @Test
     void player_asteroid_at_same_position_colliding(){
-        Entity player = mockPlayerWithPositionAndLife(positionPart_A);
-        Entity asteroid = mockAsteroidWithPositionAndLife(positionPart_A);
+        Entity player = mockEntityWithPositionAndLife(positionPart_A, Player.class, playerList);
+        Entity asteroid = mockEntityWithPositionAndLife(positionPart_A, Asteroid.class, asteroidsList);
 
         collisionManager.process(gameData, world);
 
@@ -188,8 +162,8 @@ class CollisionManagerTest {
      */
     @Test
     void player_enemy_at_same_position_colliding() {
-        Entity player = mockPlayerWithPositionAndLife(positionPart_A);
-        Entity enemy = mockEnemyWithPositionAndLife(positionPart_A);
+        Entity player = mockEntityWithPositionAndLife(positionPart_A, Player.class, playerList);
+        Entity enemy = mockEntityWithPositionAndLife(positionPart_A, Enemy.class, enemyList);
 
         collisionManager.process(gameData, world);
 
@@ -203,8 +177,8 @@ class CollisionManagerTest {
      */
     @Test
     void player_enemy_at_different_positions_not_colliding() {
-        Entity player = mockPlayerWithPositionAndLife(positionPart_A);
-        Entity enemy = mockEnemyWithPositionAndLife(positionPart_B);
+        Entity player = mockEntityWithPositionAndLife(positionPart_A, Player.class, playerList);
+        Entity enemy = mockEntityWithPositionAndLife(positionPart_B, Enemy.class, enemyList);
 
         collisionManager.process(gameData, world);
         verify(world, times(0)).removeEntity(player);
@@ -213,10 +187,10 @@ class CollisionManagerTest {
 
     @Test
     void enemy_asteroid_at_same_position_not_colliding() {
-        mockPlayerWithPositionAndLife(positionPart_A);
+        mockEntityWithPositionAndLife(positionPart_A, Player.class, playerList);
 
-        Entity enemy = mockEnemyWithPositionAndLife(positionPart_B);
-        Entity asteroid = mockAsteroidWithPositionAndLife(positionPart_B);
+        Entity enemy = mockEntityWithPositionAndLife(positionPart_B, Enemy.class, enemyList);
+        Entity asteroid = mockEntityWithPositionAndLife(positionPart_B, Asteroid.class, asteroidsList);
 
         collisionManager.process(gameData,world);
 
@@ -226,10 +200,10 @@ class CollisionManagerTest {
 
     @Test
     void enemy_enemy_at_same_position_not_colliding() {
-        mockPlayerWithPositionAndLife(positionPart_A);
+        mockEntityWithPositionAndLife(positionPart_A, Player.class, playerList);
 
-        Entity enemy_1 = mockEnemyWithPositionAndLife(positionPart_B);
-        Entity enemy_2 = mockEnemyWithPositionAndLife(positionPart_B);
+        Entity enemy_1 = mockEntityWithPositionAndLife(positionPart_B, Enemy.class, enemyList);
+        Entity enemy_2 = mockEntityWithPositionAndLife(positionPart_B, Enemy.class, enemyList);
 
         collisionManager.process(gameData, world);
 
@@ -239,10 +213,10 @@ class CollisionManagerTest {
 
     @Test
     void asteroid_asteroid_at_same_position_not_colliding() {
-        mockPlayerWithPositionAndLife(positionPart_A);
+        mockEntityWithPositionAndLife(positionPart_A, Player.class, playerList);
 
-        Entity asteroid_1 = mockAsteroidWithPositionAndLife(positionPart_B);
-        Entity asteroid_2 = mockAsteroidWithPositionAndLife(positionPart_B);
+        Entity asteroid_1 = mockEntityWithPositionAndLife(positionPart_B, Asteroid.class, asteroidsList);
+        Entity asteroid_2 = mockEntityWithPositionAndLife(positionPart_B, Asteroid.class, asteroidsList);
 
         collisionManager.process(gameData, world);
 
@@ -252,8 +226,8 @@ class CollisionManagerTest {
 
     @Test
     void no_collision_when_sum_of_entities_radii_equals_distance_between_entities_center() {
-        Entity player = mockPlayerWithPositionAndLife(new PositionPart(10, 10, 0));
-        Entity enemy = mockEnemyWithPositionAndLife(new PositionPart(30, 10, 0));
+        Entity player = mockEntityWithPositionAndLife(new PositionPart(10, 10, 0), Player.class, playerList);
+        Entity enemy = mockEntityWithPositionAndLife(new PositionPart(30, 10, 0), Enemy.class, enemyList);
 
         when(player.getRadius()).thenReturn(10f);
         when(enemy.getRadius()).thenReturn(10f);
@@ -270,8 +244,8 @@ class CollisionManagerTest {
      */
     @Test
     void no_collision_when_sum_of_entities_radii_is_one_pixel_smaller_than_distance_between_entities_center() {
-        Entity player = mockPlayerWithPositionAndLife(new PositionPart(10, 10, 0));
-        Entity enemy = mockEnemyWithPositionAndLife(new PositionPart(31, 10, 0));
+        Entity player = mockEntityWithPositionAndLife(new PositionPart(10, 10, 0), Player.class, playerList);
+        Entity enemy = mockEntityWithPositionAndLife(new PositionPart(31, 10, 0), Enemy.class, enemyList);
 
         when(player.getRadius()).thenReturn(10f);
         when(enemy.getRadius()).thenReturn(10f);
@@ -288,8 +262,8 @@ class CollisionManagerTest {
      */
     @Test
     void collision_when_sum_of_entities_radii_is_one_pixel_larger_than_distance_between_entities_center() {
-        Entity player = mockPlayerWithPositionAndLife(new PositionPart(10, 10, 0));
-        Entity enemy = mockEnemyWithPositionAndLife(new PositionPart(29, 10, 0));
+        Entity player = mockEntityWithPositionAndLife(new PositionPart(10, 10, 0), Player.class, playerList);
+        Entity enemy = mockEntityWithPositionAndLife(new PositionPart(29, 10, 0), Enemy.class, enemyList);
 
         when(player.getRadius()).thenReturn(10f);
         when(enemy.getRadius()).thenReturn(10f);
@@ -307,6 +281,10 @@ class CollisionManagerTest {
      */
     @Test
     void game_runs_without_player_present() {
+        enemyList.add(mock(Enemy.class));
+        asteroidsList.add(mock(Asteroid.class));
+        bulletList.add(mock(Bullet.class));
+
         collisionManager.process(gameData, world);
 
         // Check that player list is empty
