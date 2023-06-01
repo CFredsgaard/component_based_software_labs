@@ -5,13 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import dk.sdu.mmmi.cbse.common.asteroids.Asteroid;
-import dk.sdu.mmmi.cbse.common.bullet.Bullet;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
-import dk.sdu.mmmi.cbse.common.enemy.Enemy;
-import dk.sdu.mmmi.cbse.common.player.Player;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
@@ -99,18 +95,7 @@ public class Game
 
     private void draw() {
         for (Entity entity : world.getEntities()) {
-            // Set the color depending on the type of entity
-            if (entity instanceof Player) {
-                shapeRenderer.setColor(0, 1, 0, 1);
-            } else if (entity instanceof Enemy) {
-                shapeRenderer.setColor(1, 0, 1, 1);
-            } else if (entity instanceof Bullet) {
-                shapeRenderer.setColor(0, 1, 1, 1);
-            } else if (entity instanceof Asteroid){
-                shapeRenderer.setColor(1, 1, 0, 1);
-            } else {
-                shapeRenderer.setColor(1, 1, 1, 1);
-            }
+            shapeRenderer.setColor(0, 1, 0, 1);
 
             // Gives them thick lines by filling in the rectangles
             // shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);

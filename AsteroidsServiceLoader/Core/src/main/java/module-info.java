@@ -1,10 +1,6 @@
 module Core {
     // Internal project modules
     requires Common;
-    requires CommonAsteroids;
-    requires CommonEnemy;
-    requires CommonPlayer;
-    requires CommonBullet;
 
     requires java.desktop;
     requires com.badlogic.gdx;
