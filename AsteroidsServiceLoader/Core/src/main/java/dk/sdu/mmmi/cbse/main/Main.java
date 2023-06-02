@@ -34,5 +34,4 @@ public class Main {
 		new Lwjgl3Application(annotationConfigApplicationContext.getBean(Game.class), config);
 
 	}
-
 }
